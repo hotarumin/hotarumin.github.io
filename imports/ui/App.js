@@ -1,83 +1,146 @@
 import React, { Component } from 'react';
 
+import { withTracker } from 'meteor/react-meteor-data';
+ 
+import { ColorTemplates } from '../api/colorTemplates.js';
+
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.handleStartClick = this.handleStartClick.bind(this);
+    this.state = {view: "home"};
+  }
+
+  handleStartClick() {
+    this.setState({view: "colorPage"});
+  }
+
   render() {
+    if (this.state.view === "home") {
       return (
-        <div className="container">
+        <div>
           <h1>
             <header>
               ZEN COLORING
             </header>
           </h1>
     
-          {/* <div style = "float: left ;width: 40%;">
+          <div id="left">
             <ul>
-              <p>
                 <img src="images/sample.jpg"/>
-              </p>
             </ul>
           </div>
     
-          <div style = "float: right; width: 55%;">
+          <div id="right">
             <ul>
-              <p class="subTheme">
-                <br></br>
-                <img src="images/IMG_0133.jpg"/>
+              <p className="subTheme">
+                <img src="images/IMG_multiArea.jpg"/>
                   Multi-Area Selection
               </p>
 
-              <p class="descTheme">
+              <p className="descTheme">
                 Select multiple areas to color simultaneously.
               </p> 
 
-              <p class="subTheme">
+              <p className="subTheme">
                 <img src="images/IMG_lineSelection.jpg"/>
                   Line Coloring
               </p>
-              <p class="descTheme">
+              <p className="descTheme">
                 The lines can be colored as well.
               </p>
           
-              <p class="subTheme">
+              <p className="subTheme">
                 <img src="images/IMG_upload.jpg"  />
                   Upload
               </p>
-              <p class="descTheme">
+              <p className="descTheme">
                 Upload your own templates; Use templates contributed by other users.
               </p>
           
-              <p class="subTheme">
+              <p className="subTheme">
                 <img src="images/IMG_save.jpg"/>
                   Save
               </p>
-              <p class="descTheme">
+              <p className="descTheme">
                 Save your art, and do whatever you want with it.
               </p>
             </ul>
           </div>
     
-          <br></br>
-          <div>
-            <div class="buttons">
+          <div className ="buttons">
               <a href="chooseTemplate.html">
-              <button>
-                <p class="buttonTop">START</p>
-                <p class="buttonBottom">Choose an existing template</p>
+              <button onClick={this.handleStartClick}>
+                <p className="buttonTop">START</p>
+                <p className="buttonBottom">Choose an existing template</p>
               </button>
               </a>
-            </div>
-    
-            <div class="buttons">
+
               <a href="upload.html">
               <button>
-                <p class="buttonTop">UPLOAD</p>
-                <p class="buttonBottom">Upload your own template</p>
+                <p className="buttonTop">UPLOAD</p>
+                <p className="buttonBottom">Upload your own template</p>
               </button>
               </a>
-            </div> 
-          </div> */}
+          </div>
       </div>
       )
-  }
+    } else if (this.state.view === "colorPage") {
+      return (
+        <div>
+          <h1>
+            <header>
+              ZEN COLORING
+            </header>
+          </h1>
+          
+          <div className="coloringBody">
+            <div className="vert-bar">
+              <canvas id="picker"></canvas>
+                <input id="color" value="54aedb"></input>
+                  
+              </div>
+    
+              <div className="pickButton">
+                <button>Brush</button>
+                <button>Fill</button>
+              </div>
+                 
+              <div className="sizeSlider">
+                <p> Brush size </p>
+                  <input type="range" min="1" max="100" value="50" className="slider" id="myRange"></input>
+              </div>
 
+              <div className="opacitySlider">
+                <p> Brush opacity </p>
+                <input type="range" min="1" max="100" value="50" className="slider" id="myRange"></input>
+              </div>
+           
+              <p> Color Lineart </p>
+              <div className="pickButton">
+                <button>On</button>
+                <button>Off</button>
+              </div>
+            </div>
+    
+            <div className="horiz-bar">
+              <button><img id="eyedropperImg" src="images/IMG_eyedropper.png"/></button>
+              <button><img id="undoImg" src="images/IMG_undo.png"/></button>
+              <button><img id="redoImg" src="images/IMG_undo.png"/></button>
+              <button><img id="zoomInImg" src="images/IMG_zoomIn.png"/>  </button>
+              <button><img id="zoomOutImg" src="images/IMG_zoomOut.png"/></button>
+              <div className="pickButton">
+                <button> Select </button>
+                <button> De-select </button>
+              </div>
+              <button id="saveButton"> Save </button>
+            </div>  
+        </div>
+      )  
+    } else {
+      return null;
+    } 
+  }
 }
+
+ 
